@@ -1,0 +1,29 @@
+* how to compile
+Could do this in a Makefile ?
+
+make sure vxi11_lib is compiled with -fPIC
+
+#+BEGIN_SRC sh :results output verbatim
+  cd vxi11_lib/ && make clean && make
+#+END_SRC
+
+#+RESULTS:
+: rm -f *.o vxi11_cmd vxi11.h vxi11_svc.c vxi11_xdr.c vxi11_clnt.c TAGS
+: rpcgen -M vxi11.x
+: g++ -g -fPIC -c vxi11_cmd.cc -o vxi11_cmd.o
+: g++ -g -fPIC -c vxi11_user.cc -o vxi11_user.o
+: cc -g -fPIC   -c -o vxi11_clnt.o vxi11_clnt.c
+: cc -g -fPIC   -c -o vxi11_xdr.o vxi11_xdr.c
+: g++ -g -fPIC -o vxi11_cmd vxi11_cmd.o vxi11_user.o vxi11_clnt.o vxi11_xdr.o
+
+then compile the wrapper:
+
+ #+BEGIN_SRC sh :results output verbatim
+   g++ -fPIC -c wrapper.c
+   g++ -shared -Wl,-soname,libvxiwrapper.so -o libvxiwrapper.so wrapper.o vxi11_lib/*.o
+#+END_SRC
+
+ #+RESULTS:
+
+
+
