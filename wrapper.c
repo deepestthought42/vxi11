@@ -4,12 +4,12 @@
 /* callable from C */
 
 extern "C" {
-    int open_device(const char *ip, CLINK *clink)
+    int open_device(const char *ip, CLINK **clink)
     {
 	vxi11_open_device(ip, clink);
     }
 
-    int	open_device_by_name(const char *ip, CLINK *clink, char *device)
+    int	open_device_by_name(const char *ip, CLINK **clink, char *device)
     {
 	vxi11_open_device(ip,clink,device);
     }

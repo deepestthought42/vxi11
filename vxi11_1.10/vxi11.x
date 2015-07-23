@@ -193,7 +193,7 @@ struct Device_ReadResp
 struct Device_ReadStbResp
 {
 	Device_ErrorCode	error;
-	unsigned char		stb;			/* the returned status byte */
+	char		stb;			/* the returned status byte */
 };
 struct Device_GenericParms
 {

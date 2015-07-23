@@ -244,7 +244,7 @@ xdr_Device_ReadStbResp (XDR *xdrs, Device_ReadStbResp *objp)
 
 	 if (!xdr_Device_ErrorCode (xdrs, &objp->error))
 		 return FALSE;
-	 if (!xdr_u_char (xdrs, &objp->stb))
+	 if (!xdr_char (xdrs, &objp->stb))
 		 return FALSE;
 	return TRUE;
 }

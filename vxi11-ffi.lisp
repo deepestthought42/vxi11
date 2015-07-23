@@ -34,12 +34,12 @@
 (cffi:defcfun ("open_device" open-device)
     :int
   (ip :string)
-  (clink (:pointer (:struct clink))))
+  (clink (:pointer)))
 
 (cffi:defcfun ("open_device_by_name")
     :int
   (ip :string)
-  (clink (:pointer (:struct clink)))
+  (clink (:pointer))
   (device :string))
 
 (cffi:defcfun ("close_device")
@@ -108,12 +108,20 @@
 
 (defconstant +NO-ERROR+ 0)
 
+
+
+
 (defmacro with-open-device ((ip link) &body body)
-  `(cffi:with-foreign-object (,link '(:struct clink))
-     (if (not (equal (open-device ,ip ,link) +NO-ERROR+))
-	 (error "could not open connection to: ~a" ,ip))
-     (unwind-protect (progn ,@body)
-       (close-device ,ip ,link))))
+  (alexandria:with-gensyms (err-value link-pointer)
+    `(cffi:with-foreign-object (,link-pointer :pointer)
+       (let ((,err-value (open-device ,ip ,link-pointer)))
+	 (if (not (equal ,err-value +NO-ERROR+))
+	     (error "could not open connection to: ~a; error: ~a" ,ip ,err-value)))
+       (let ((,link ,link-pointer))
+	 (unwind-protect (progn ,@body)
+	   (let ((,err-value (close-device ,ip ,link)))
+	     (if (not (equal ,err-value +NO-ERROR+))
+		 (error "could not close connection to: ~a; error: ~a" ,ip ,err-value))))))))
 
 (defmacro with-open-device-and-checked ((ip link) &body body)
   `(with-open-device (,ip ,link)

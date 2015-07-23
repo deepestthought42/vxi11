@@ -88,7 +88,7 @@ typedef struct Device_ReadResp Device_ReadResp;
 
 struct Device_ReadStbResp {
 	Device_ErrorCode error;
-	u_char stb;
+	char stb;
 };
 typedef struct Device_ReadStbResp Device_ReadStbResp;
 

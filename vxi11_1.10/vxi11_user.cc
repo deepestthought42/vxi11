@@ -198,6 +198,7 @@ int     device_no = -1;
 			/* Remove the IP address, so that if we re-open the same device
 			 * we do it properly */
 			memset(VXI11_IP_ADDRESS[device_no], 0, 20);
+			VXI11_DEVICE_NO--;
 			}
 		}
 	return ret;
