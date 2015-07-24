@@ -111,10 +111,10 @@
 
 
 
-(defmacro with-open-device ((ip link) &body body)
+(defmacro with-open-device ((ip link &optional (instrument-name "inst0")) &body body)
   (alexandria:with-gensyms (err-value link-pointer)
     `(cffi:with-foreign-object (,link-pointer :pointer)
-       (let ((,err-value (open-device ,ip ,link-pointer)))
+       (let ((,err-value (open-device-by-name ,ip ,link-pointer ,instrument-name)))
 	 (if (not (equal ,err-value +NO-ERROR+))
 	     (error "could not open connection to: ~a; error: ~a" ,ip ,err-value)))
        (let ((,link ,link-pointer))
@@ -123,8 +123,8 @@
 	     (if (not (equal ,err-value +NO-ERROR+))
 		 (error "could not close connection to: ~a; error: ~a" ,ip ,err-value))))))))
 
-(defmacro with-open-device-and-checked ((ip link) &body body)
-  `(with-open-device (,ip ,link)
+(defmacro with-open-device-and-checked ((ip link &optional (instrument-name "inst0")) &body body)
+  `(with-open-device (,ip ,link ,instrument-name)
      (let ((ret (progn ,@body)))
        (if (not (equal 0 ret))
 	   (error "Call to AFG returned: ~a" ret)
