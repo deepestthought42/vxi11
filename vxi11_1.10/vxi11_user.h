@@ -1,4 +1,4 @@
-/* vxi11_user.h
+v/* vxi11_user.h
  * Copyright (C) 2006 Steve D. Sharples
  *
  * User library for opening, closing, sending to and receiving from
