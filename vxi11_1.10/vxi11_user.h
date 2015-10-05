@@ -1,4 +1,4 @@
-v/* vxi11_user.h
+/* vxi11_user.h
  * Copyright (C) 2006 Steve D. Sharples
  *
  * User library for opening, closing, sending to and receiving from
@@ -31,7 +31,7 @@ v/* vxi11_user.h
 #include <rpc/rpc.h>
 #include "vxi11.h"
 
-#define	VXI11_DEFAULT_TIMEOUT	10000	/* in ms */
+#define	VXI11_DEFAULT_TIMEOUT	2000	/* in ms */
 #define	VXI11_READ_TIMEOUT	2000	/* in ms */
 #define	VXI11_CLIENT		CLIENT
 #define	VXI11_LINK		Create_LinkResp

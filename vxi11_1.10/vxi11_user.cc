@@ -124,17 +124,20 @@ int	device_no=-1;
 		 * opened so we don't run out of storage space. */
 		else {
 			ret = vxi11_open_device(ip, &(clink->client), &(clink->link), device);
-			strncpy(VXI11_IP_ADDRESS[VXI11_DEVICE_NO],ip,20);
-			VXI11_CLIENT_ADDRESS[VXI11_DEVICE_NO] = clink->client;
-			VXI11_LINK_COUNT[VXI11_DEVICE_NO]=1;
+			if (0 == ret) 
+			{ 
+			    strncpy(VXI11_IP_ADDRESS[VXI11_DEVICE_NO],ip,20);
+			    VXI11_CLIENT_ADDRESS[VXI11_DEVICE_NO] = clink->client;
+			    VXI11_LINK_COUNT[VXI11_DEVICE_NO]=1;
 //			printf("Open function, could not find ip address %s.\n",ip);
 //			printf("So now, VXI11_IP_ADDRESS[%d]=%s,\n",VXI11_DEVICE_NO,VXI11_IP_ADDRESS[VXI11_DEVICE_NO]);
 //			printf("VXI11_CLIENT_ADDRESS[%d]=%ld,\n",VXI11_DEVICE_NO,VXI11_CLIENT_ADDRESS[VXI11_DEVICE_NO]);
 //			printf("          clink->client=%ld,\n",clink->client);
 //			printf("VXI11_LINK_COUNT[%d]=%d.\n",VXI11_DEVICE_NO,VXI11_LINK_COUNT[VXI11_DEVICE_NO]);
-			VXI11_DEVICE_NO++;
+			    VXI11_DEVICE_NO++;
 			}
 		}
+	}
 	/* already got a client for this IP address */
 	else {
 		/* Copy the client pointer address. Just establish a new link
