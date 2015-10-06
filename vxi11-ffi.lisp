@@ -37,8 +37,8 @@
 
 (cffi:defcfun ("vxi11_close_device")
     :int
-  (ip :string)
-  (clink (:pointer (:struct clink))))
+  (clink (:pointer (:struct clink)))
+  (ip :string))
 
 
 (cffi:defcfun ("vxi11_send_command")
