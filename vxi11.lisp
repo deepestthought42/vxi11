@@ -17,19 +17,19 @@
   (cffi:with-foreign-objects ((buf :char ret-buf-length))
     (dotimes (i ret-buf-length)
       (setf (cffi:mem-aref buf :char i) 0))
-    (with-open-device-and-checked (ip-address link instrument-name)
+    (with-open-device-and-checked (link ip-address instrument-name)
       (vxi11-send-and-receive link command buf ret-buf-length timeout-in-ms))
     (cffi:foreign-string-to-lisp buf)))
 
 (defun query-command-double (command &optional (ip-address "titanfg.triumf.ca")
 					       (timeout-in-ms *default-timeout*))
-  (with-open-device (ip-address link)
+  (with-open-device (link ip-address)
     (vxi11-obtain-double-value-timeout link command timeout-in-ms)))
 
 
 (defun query-command-long (command &optional (ip-address "titanfg.triumf.ca")
 					     (timeout-in-ms *default-timeout*))
-  (with-open-device (ip-address link)
+  (with-open-device (link ip-address)
     (vxi11-obtain-long-value-timeout link command timeout-in-ms)))
 
 
