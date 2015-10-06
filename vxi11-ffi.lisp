@@ -110,7 +110,7 @@
        (let ((,err-value (vxi11-open-device ,link-pointer ,ip ,instrument-name)))
 	 (if (not (equal ,err-value +NO-ERROR+))
 	     (error "could not open connection to: ~a; error: ~a" ,ip ,err-value)))
-       (let ((,link (cffi:mem-ref ,link-pointer :pointer)))
+       (let ((,link ,link-pointer))
 	 (unwind-protect (progn ,@body)
 	   (let ((,err-value (vxi11-close-device ,ip ,link)))
 	     (if (not (equal ,err-value +NO-ERROR+))
