@@ -4,14 +4,12 @@
 
 (eval-when (:compile-toplevel :load-toplevel)
   (defparameter *lib-location*
-    (concatenate 'string
-		 (directory-namestring (asdf:system-relative-pathname 'vxi11 ""))
-		 "libvxiwrapper.so")))
+    (asdf:system-relative-pathname 'vxi11 "vxi11/library/libvxi11.so.1")))
 
 
 (cffi:define-foreign-library vxiwrapper
   (:unix (:or #.*lib-location*))
-  (t (:default "libvxiwrapper")))
+  (t (:default "libvxi11.so.1")))
 
 
 (cffi:use-foreign-library vxiwrapper)
@@ -31,36 +29,31 @@
 
 
 
-(cffi:defcfun ("open_device" open-device)
+(cffi:defcfun ("vxi11_open_device")
     :int
-  (ip :string)
-  (clink (:pointer)))
-
-(cffi:defcfun ("open_device_by_name")
-    :int
-  (ip :string)
   (clink (:pointer))
+  (ip :string)
   (device :string))
 
-(cffi:defcfun ("close_device")
+(cffi:defcfun ("vxi11_close_device")
     :int
   (ip :string)
   (clink (:pointer (:struct clink))))
 
 
-(cffi:defcfun ("send_command")
+(cffi:defcfun ("vxi11_send_command")
     :int
   (clink (:pointer (:struct clink)))
   (cmd :string))
 
 
-(cffi:defcfun ("send_data")
+(cffi:defcfun ("vxi11_send_data")
     :int
   (clink (:pointer (:struct clink)))
   (cmd :string) (len :unsigned-long))
 
 
-(cffi:defcfun ("receive")
+(cffi:defcfun ("vxi11_receive_timeout")
     :long
   (clink (:pointer (:struct clink)))
   (buffer (:pointer :char))
@@ -68,7 +61,7 @@
   (timeout :unsigned-long))
 
 
-(cffi:defcfun ("send_data_block")
+(cffi:defcfun ("vxi11_send_data_block")
     :int
   (clink (:pointer (:struct clink)))
   (cmd :string)
@@ -76,7 +69,7 @@
   (len :unsigned-long))
 
 
-(cffi:defcfun ("receive_data_block")
+(cffi:defcfun ("vxi11_receive_data_block")
     :long
   (clink (:pointer (:struct clink)))
   (buffer (:pointer :char))
@@ -84,7 +77,7 @@
   (timeout :unsigned-long))
 
 
-(cffi:defcfun ("send_and_receive")
+(cffi:defcfun ("vxi11_send_and_receive")
     :long
   (clink (:pointer (:struct clink)))
   (cmd :string)
@@ -93,14 +86,14 @@
   (timeout :unsigned-long))
 
 
-(cffi:defcfun ("obtain_long_value")
+(cffi:defcfun ("vxi11_obtain_long_value_timeout")
     :long
   (clink (:pointer (:struct clink)))
   (cmd :string)
   (timeout :unsigned-long))
 
 
-(cffi:defcfun ("obtain_double_value")
+(cffi:defcfun ("vxi11_obtain_double_value_timeout")
     :double
   (clink (:pointer (:struct clink)))
   (cmd :string)
@@ -114,12 +107,12 @@
 (defmacro with-open-device ((ip link &optional (instrument-name "inst0")) &body body)
   (alexandria:with-gensyms (err-value link-pointer)
     `(cffi:with-foreign-object (,link-pointer :pointer)
-       (let ((,err-value (open-device-by-name ,ip ,link-pointer ,instrument-name)))
+       (let ((,err-value (vxi11-open-device ,link-pointer ,ip ,instrument-name)))
 	 (if (not (equal ,err-value +NO-ERROR+))
 	     (error "could not open connection to: ~a; error: ~a" ,ip ,err-value)))
        (let ((,link ,link-pointer))
 	 (unwind-protect (progn ,@body)
-	   (let ((,err-value (close-device ,ip ,link)))
+	   (let ((,err-value (vxi11-close-device ,ip ,link)))
 	     (if (not (equal ,err-value +NO-ERROR+))
 		 (error "could not close connection to: ~a; error: ~a" ,ip ,err-value))))))))
 
