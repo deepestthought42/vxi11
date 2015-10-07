@@ -1,7 +1,7 @@
 ;;;; package.lisp
 
 (defpackage #:vxi11
-  (:use #:cl)
+  (:use #:cl #:iterate)
   (:export
    #:query-command
    #:query-command-double
@@ -10,5 +10,9 @@
    #:send-data
    #:send-data-block
    #:with-open-device
-   #:with-open-device-and-checked))
+   #:with-open-device-and-checked
+   #:query-data-block
+   #:convert-to-sequence
+   #:convert-to-string
+   #:query-data))
 

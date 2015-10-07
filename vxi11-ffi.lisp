@@ -41,10 +41,11 @@
   (ip :string))
 
 
-(cffi:defcfun ("vxi11_send_command")
+(cffi:defcfun ("vxi11_send")
     :int
   (clink (:pointer (:struct clink)))
-  (cmd :string))
+  (cmd :string)
+  (len :unsigned-long))
 
 
 (cffi:defcfun ("vxi11_send_data")
