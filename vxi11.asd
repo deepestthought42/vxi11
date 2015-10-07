@@ -8,7 +8,8 @@
   :depends-on (#:alexandria
                #:iterate
                #:cffi
-               #:binary-types)
+               #:binary-types
+	       #:verbose)
   :components ((:file "package")
 	       (:file "vxi11-ffi")
                (:file "vxi11")))

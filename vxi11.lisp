@@ -10,6 +10,7 @@
 (defparameter *default-buffer-length* 100)
 
 
+
 (defun convert-to-string (buf len)
   (declare (ignore len))
   (cffi:foreign-string-to-lisp buf))
@@ -27,10 +28,12 @@
 				(instrument-name "inst0")
 				(ret-buf-length 100)
 				(timeout-in-ms *default-timeout*))
+  (v:debug :vxi11 "send and receive, command ~a" command)
   (cffi:with-foreign-objects ((buf :char ret-buf-length))
     (dotimes (i ret-buf-length)
       (setf (cffi:mem-aref buf :char i) 0))
     (with-open-device-and-checked (link ip-address instrument-name)
+      
       (vxi11-send-and-receive link command buf ret-buf-length timeout-in-ms))
     (funcall output-conversion buf ret-buf-length)))
 
@@ -47,23 +50,22 @@
 
 (defun query-command-double (command &optional (ip-address "titanfg.triumf.ca")
 					       (timeout-in-ms *default-timeout*))
+  (v:debug :vxi11 "obtain double value, command ~a" command)
   (with-open-device (link ip-address)
     (vxi11-obtain-double-value-timeout link command timeout-in-ms)))
 
 
 (defun query-command-long (command &optional (ip-address "titanfg.triumf.ca")
 					     (timeout-in-ms *default-timeout*))
+  (v:debug :vxi11 "obtain long value, command: ~a" command)
   (with-open-device (link ip-address)
     (vxi11-obtain-long-value-timeout link command timeout-in-ms)))
-
-
-
-
 
 
 
 (defun send-command (command &key
 			      (ip-address "titanfg.triumf.ca")
 			      (instrument-name "inst0"))
+  (v:debug :vxi11 "sending command ~a" command)
   (with-open-device-and-checked (link ip-address instrument-name)
     (vxi11-send link command (length command))))
