@@ -9,7 +9,7 @@
                #:iterate
                #:cffi
                #:binary-types
-	       #:verbose)
+	       #:log4cl)
   :components ((:file "package")
 	       (:file "vxi11-ffi")
                (:file "vxi11")))
