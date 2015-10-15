@@ -14,5 +14,7 @@
    #:query-data-block
    #:convert-to-sequence
    #:convert-to-string
-   #:query-data))
+   #:query-data
+   #:*mock*
+   #:*mock-default-val*))
 
