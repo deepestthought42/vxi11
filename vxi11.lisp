@@ -35,7 +35,7 @@
   (iter
     (with ret-array = (make-array `(,len)))
     (for i from 0 below len)
-    (setf (aref ret-array i) (cffi:mem-aref buf :char i))
+    (setf (aref ret-array i) (cffi:mem-aref buf :unsigned-char i))
     (finally (return ret-array))))
 
 (defun query-data (command &key (output-conversion #'convert-to-sequence)
