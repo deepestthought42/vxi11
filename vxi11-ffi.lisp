@@ -7,12 +7,7 @@
     (asdf:system-relative-pathname 'vxi11 "vxi11/library/libvxi11.so.1")))
 
 
-(cffi:define-foreign-library vxiwrapper
-  (:unix (:or #.*lib-location*))
-  (t (:default "libvxi11.so.1")))
-
-
-(cffi:use-foreign-library vxiwrapper)
+(cffi:load-foreign-library *lib-location*)
 
 (cffi:defcstruct create-link-resp
   (device-error-code :long)
