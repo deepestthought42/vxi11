@@ -116,5 +116,5 @@
   `(with-open-device (,link ,ip ,instrument-name)
      (let ((ret (progn ,@body)))
        (if (not (equal 0 ret))
-	   (error "Call to AFG returned: ~a" ret)
+	   (error "Call to device: ~a returned: ~a" instrument-name ret)
 	   ret))))
