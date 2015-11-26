@@ -74,7 +74,7 @@
 
 
 (cffi:defcfun ("vxi11_send_and_receive")
-    :long
+    :int
   (clink (:pointer (:struct clink)))
   (cmd :string)
   (buf (:pointer :char))
