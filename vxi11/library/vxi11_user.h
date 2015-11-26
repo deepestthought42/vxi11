@@ -52,11 +52,11 @@ extern "C" {
 
 typedef	struct _VXI11_CLINK VXI11_CLINK;
 
-/* Default timeout value to use, in s. */
-#define	VXI11_DEFAULT_TIMEOUT	3
+/* Default timeout value to use, in ms. */
+#define	VXI11_DEFAULT_TIMEOUT	3000
 
 /* Read timeout to use, in ms. */
-#define	VXI11_READ_TIMEOUT	2
+#define	VXI11_READ_TIMEOUT	2000
 
 /* vxi11_receive() return value if a query times out ON THE INSTRUMENT (and so
  * we have to resend the query). */
