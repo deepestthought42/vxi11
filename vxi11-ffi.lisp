@@ -2,12 +2,12 @@
 
 (in-package #:vxi11)
 
-(eval-when (:compile-toplevel :load-toplevel)
-  (defparameter *lib-location*
-    (asdf:system-relative-pathname 'vxi11 "vxi11/library/libvxi11.so.1")))
+(cffi:define-foreign-library vxi11-library
+  (:unix (:or #.(concatenate
+		 'string (directory-namestring (asdf:system-relative-pathname 'vxi11 ""))
+		 "libvxi11.so.1")))
+  (t (:default "libvxi11")))
 
-
-(cffi:load-foreign-library *lib-location*)
 
 (cffi:defcstruct create-link-resp
   (device-error-code :long)

@@ -12,5 +12,6 @@
 	       #:log4cl)
   :components ((:file "package")
 	       (:file "vxi11-ffi")
-               (:file "vxi11")))
+               (:file "vxi11")
+	       (:file "deploy")))
 
