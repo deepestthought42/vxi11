@@ -2,12 +2,13 @@
 
 (in-package #:vxi11)
 
-(cffi:define-foreign-library vxi11-library
-  (:unix (:or #.(concatenate
-		 'string (directory-namestring (asdf:system-relative-pathname 'vxi11 ""))
-		 "libvxi11.so.1")))
-  (t (:default "libvxi11")))
+(cffi:define-foreign-library
+    (vxi11-library :search-path
+		   (asdf/system:system-relative-pathname :vxi11 ""))
+  (:unix (:or "libvxi11.so"))
+  (t (:default "libvxi11.so")))
 
+(cffi:use-foreign-library vxi11-library)
 
 (cffi:defcstruct create-link-resp
   (device-error-code :long)
