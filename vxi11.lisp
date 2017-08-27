@@ -6,7 +6,7 @@
 
 
 
-(defparameter *default-timeout* 2000)
+(defparameter *default-timeout* 2)
 (defparameter *default-buffer-length* 100)
 
 
