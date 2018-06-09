@@ -6,7 +6,7 @@
 
 
 
-(defparameter *default-timeout* 2)
+(defparameter *default-timeout-in-ms* 2000)
 (defparameter *default-buffer-length* 100)
 
 
@@ -42,7 +42,7 @@
 				(ip-address "titanfg.triumf.ca")
 				(instrument-name "inst0")
 				(ret-buf-length 100)
-				(timeout-in-ms *default-timeout*))
+				(timeout-in-ms *default-timeout-in-ms*))
   (log:debug "send and receive, command ~a" command)
   (if *mock* (return-from query-data (find-mock-return command)))
   
@@ -57,7 +57,7 @@
 (defun query-command (command &key (ip-address "titanfg.triumf.ca")
 				   (instrument-name "inst0")
 				   (ret-buf-length 100)
-				   (timeout-in-ms *default-timeout*))
+				   (timeout-in-ms *default-timeout-in-ms*))
   (query-data command
 	      :output-conversion #'convert-to-string
 	      :ip-address ip-address :instrument-name instrument-name
@@ -66,7 +66,7 @@
 
 
 (defun query-command-double (command &optional (ip-address "titanfg.triumf.ca")
-					       (timeout-in-ms *default-timeout*))
+					       (timeout-in-ms *default-timeout-in-ms*))
   (log:debug "obtain double value, command ~a" command)
   
   (if *mock* (return-from query-command-double
@@ -77,7 +77,7 @@
 
 
 (defun query-command-long (command &optional (ip-address "titanfg.triumf.ca")
-					     (timeout-in-ms *default-timeout*))
+					     (timeout-in-ms *default-timeout-in-ms*))
   (log:debug "obtain long value, command: ~a" command)
 
   (if *mock* (return-from query-command-long
