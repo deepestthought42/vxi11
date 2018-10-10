@@ -2,15 +2,14 @@
 
 (asdf:defsystem #:vxi11
   :serial t
-  :description "Describe vxi11 here"
-  :author "Your Name <your.name@example.com>"
+  :description "Lisp wrapper for vxi11 c library"
+  :author "Renee Klawitter <klawitterrenee@gmail.com>"
   :license "Specify license here"
   :depends-on (#:alexandria
                #:iterate
                #:cffi
                #:binary-types
-	       #:deploy
-	       #:log4cl)
+	       #:deploy)
   :components ((:file "package")
 	       (:file "vxi11-ffi")
                (:file "vxi11")
